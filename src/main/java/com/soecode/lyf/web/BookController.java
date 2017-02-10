@@ -35,6 +35,12 @@ public class BookController {
 		return "list";// WEB-INF/jsp/"list".jsp
 	}
 
+	@RequestMapping(value = "/list2", method = RequestMethod.GET)
+	@ResponseBody
+	private Object list() {
+		return bookService.getList();
+	}
+
 	// ajax json
 	@RequestMapping(value = "/{bookId}/detail", method = RequestMethod.GET)
 	@ResponseBody
@@ -54,7 +60,7 @@ public class BookController {
 			"application/json; charset=utf-8" })
 	private Result<AppointExecution> appoint(@PathVariable("bookId") Long bookId, @Param("studentId") Long studentId) {
 		if (studentId == null || studentId.equals("")) {
-			return new Result<>(false, "学号不能为空");
+			return new Result<AppointExecution>(false, "学号不能为空");
 		}
 		AppointExecution execution = bookService.appoint(bookId, studentId);
 		return new Result<AppointExecution>(true, execution);
